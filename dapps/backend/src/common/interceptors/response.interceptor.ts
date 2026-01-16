@@ -30,7 +30,7 @@ export class ResponseInterceptor implements NestInterceptor {
             statusCode = code;
           }
         } catch {
-          // keep default status code
+          // Default
         }
 
         return {
