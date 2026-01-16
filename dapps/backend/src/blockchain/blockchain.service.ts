@@ -23,7 +23,7 @@ export class BlockchainService {
 
     // GANTI dengan address hasil deploy Day 2
     this.contractAddress =
-      '0x4f2ce60e12c8d848e73F543f9b3d19Ec0a69F1ff' as `0x${string}`;
+      '0xB79Ba21eeF73994DE8cfbeE2d5209411EF866d03' as `0x${string}`;
   }
 
   // 🔹 Read latest value
