@@ -23,7 +23,7 @@ export class BlockchainService {
 
     // GANTI dengan address hasil deploy Day 2
     this.contractAddress =
-      '0x30bB041a81191e0f91D16a074804B94d0E7524E4' as `0x${string}`;
+      '0x4f2ce60e12c8d848e73F543f9b3d19Ec0a69F1ff' as `0x${string}`;
   }
 
   // 🔹 Read latest value
@@ -48,7 +48,6 @@ export class BlockchainService {
     }
   }
 
-  // 🔹 Read ValueUpdated events with pagination
   async getValueUpdatedEvents(
     fromBlock: number,
     toBlock: number,
@@ -56,7 +55,6 @@ export class BlockchainService {
     limit: number = 10,
   ): Promise<PaginatedResponseDto<any[]>> {
     try {
-      // Validate block range
       const blockRange = toBlock - fromBlock;
       if (blockRange < 0) {
         throw new BadRequestException(
@@ -64,7 +62,6 @@ export class BlockchainService {
         );
       }
 
-      // RPC restriction: max 2048 blocks per request
       const MAX_BLOCKS = 2048;
       if (blockRange > MAX_BLOCKS) {
         throw new BadRequestException(
@@ -72,7 +69,6 @@ export class BlockchainService {
         );
       }
 
-      // Fetch events
       const events = await this.client.getLogs({
         address: this.contractAddress,
         event: {
@@ -90,7 +86,6 @@ export class BlockchainService {
         toBlock: BigInt(toBlock),
       });
 
-      // Format events
       const formattedEvents = events.map((event) => ({
         blockNumber: event.blockNumber?.toString(),
         value: event.args.newValue?.toString(),
@@ -98,7 +93,6 @@ export class BlockchainService {
         logIndex: event.logIndex,
       }));
 
-      // Paginate results
       const totalItems = formattedEvents.length;
       const totalPages = Math.ceil(totalItems / limit);
       const startIndex = (page - 1) * limit;
@@ -127,7 +121,6 @@ export class BlockchainService {
     }
   }
 
-  // 🔹 Centralized RPC Error Handler
   private handleRpcError(error: unknown): never {
     const message = error instanceof Error ? error.message : String(error);
 

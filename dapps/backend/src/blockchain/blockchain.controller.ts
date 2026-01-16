@@ -7,13 +7,11 @@ import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 export class BlockchainController {
   constructor(private readonly blockchainService: BlockchainService) {}
 
-  // GET /blockchain/value
   @Get('value')
   async getValue() {
     return this.blockchainService.getLatestValue();
   }
 
-  // GET /blockchain/events
   @Post('events')
   async getEvents(
     @Body() body: GetEventsDto,

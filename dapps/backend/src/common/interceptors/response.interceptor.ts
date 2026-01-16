@@ -13,7 +13,6 @@ export class ResponseInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       map((data: unknown) => {
-        // If data already has statusCode and timestamp (already formatted), return as is
         if (
           data &&
           typeof data === 'object' &&
@@ -23,7 +22,6 @@ export class ResponseInterceptor implements NestInterceptor {
           return data as ApiResponseDto<unknown>;
         }
 
-        // Otherwise, wrap in standard ApiResponseDto
         let statusCode: number = 200;
         try {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

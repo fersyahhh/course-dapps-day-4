@@ -17,7 +17,6 @@ async function bootstrap() {
     }),
   );
 
-  // Global exception filter
   app.useGlobalFilters(new HttpExceptionFilter());
 
   // Global interceptors
